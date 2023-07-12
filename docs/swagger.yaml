@@ -1,0 +1,26 @@
+info:
+  contact: {}
+  description: go lang gin web swager demo
+  termsOfService: http://127.0.0.1:8080
+  title: swageer demo
+  version: "3.0"
+paths:
+  /get_user_info:
+    get:
+      parameters:
+      - description: 用户名
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: get user info by name
+swagger: "2.0"
