@@ -1,9 +1,9 @@
 package main
 
 import (
-	"gin-swager-demo/controller"
-	_ "gin-swager-demo/docs"
-	"gin-swager-demo/middleware"
+	"gin-demo/controller"
+	_ "gin-demo/docs"
+	"gin-demo/middleware"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
