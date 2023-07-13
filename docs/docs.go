@@ -36,12 +36,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/models.UserInfo"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.UserInfo": {
+            "type": "object",
+            "properties": {
+                "birthday": {
+                    "type": "string"
+                },
+                "job": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string"
                 }
             }
         }

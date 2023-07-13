@@ -1,3 +1,13 @@
+definitions:
+  models.UserInfo:
+    properties:
+      birthday:
+        type: string
+      job:
+        type: string
+      sex:
+        type: string
+    type: object
 info:
   contact: {}
   description: go lang gin web swager demo
@@ -19,8 +29,6 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/models.UserInfo'
       summary: get user info by name
 swagger: "2.0"

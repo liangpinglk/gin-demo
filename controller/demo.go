@@ -8,7 +8,7 @@ import (
 // @Summary get user info by name
 // @Produce json
 // @Param name query string true "用户名"
-// @Success 200 {object} map[string]string
+// @Success 200 {object} models.UserInfo
 // @Router /get_user_info [get]
 func GetUserInfo(c *gin.Context) {
 	name := c.DefaultQuery("name", "xx")
