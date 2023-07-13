@@ -5,6 +5,7 @@
 swag init
 ```
 - [x] live reload 
+- [x] Using middleware to handle all unexpect errors
 ## reference
 ### gin use swagger
 - [生成接口文档](https://golang2.eddycjy.com/posts/ch2/04-api-doc/)

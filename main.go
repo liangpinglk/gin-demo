@@ -3,9 +3,11 @@ package main
 import (
 	"gin-swager-demo/controller"
 	_ "gin-swager-demo/docs"
+	"gin-swager-demo/middleware"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 // @title swageer demo
@@ -15,6 +17,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.Use(middleware.CatchError(http.StatusInternalServerError))
 	r.GET("/get_user_info", controller.GetUserInfo)
 	r.Run()
 }
