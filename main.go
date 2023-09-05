@@ -4,6 +4,7 @@ import (
 	"gin-demo/controller"
 	_ "gin-demo/docs"
 	"gin-demo/middleware"
+	"gin-demo/tools"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -15,6 +16,8 @@ import (
 // @description go lang gin web swager demo
 // @termsOfService http://127.0.0.1:8080
 func main() {
+	// init
+	tools.InitLog()
 	r := gin.Default()
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Use(middleware.CatchError(http.StatusInternalServerError))

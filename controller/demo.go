@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"gin-demo/tools"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -12,8 +13,9 @@ import (
 // @Router /get_user_info [get]
 func GetUserInfo(c *gin.Context) {
 	//name := c.DefaultQuery("name", "xx")
+	tools.Sugar.Info("get user info log")
 	name := c.Query("name")
-	UserInfo := map[string]map[string]string{"liangping": {"birthday": "19960702", "sex": "man", "job": "programmer"}, "lianglele": {"birthdat": "19950203", "sex": "man", "job": "civil servant"}}
+	UserInfo := map[string]map[string]string{"liangping": {"birthday": "199607021", "sex": "man", "job": "programmer"}, "lianglele": {"birthdat": "19950203", "sex": "man", "job": "civil servant"}}
 	result, ok := UserInfo[name]
 	if ok {
 		c.JSON(http.StatusOK, result)
