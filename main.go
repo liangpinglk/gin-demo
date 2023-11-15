@@ -18,6 +18,7 @@ import (
 func main() {
 	// init
 	tools.InitLog()
+	tools.InitMysql()
 	r := gin.Default()
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Use(middleware.CatchError(http.StatusInternalServerError))

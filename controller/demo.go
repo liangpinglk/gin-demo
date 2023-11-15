@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"gin-demo/tools"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -14,9 +15,17 @@ import (
 func GetUserInfo(c *gin.Context) {
 	//name := c.DefaultQuery("name", "xx")
 	tools.Sugar.Info("get user info log")
+	insertSql := fmt.Sprintf("INSERT INTO test1 (`name`) VALUES ('%s');", tools.RandomString(5))
+	fmt.Println(tools.MYSQLDB)
+	insert, err := tools.MYSQLDB.Query(insertSql)
+	if err != nil {
+		fmt.Println("insert error: ", err)
+	} else {
+		fmt.Println("insert successfully:", insert)
+	}
 	name := c.Query("name")
-	UserInfo := map[string]map[string]string{"liangping": {"birthday": "199607021", "sex": "man", "job": "programmer"}, "lianglele": {"birthdat": "19950203", "sex": "man", "job": "civil servant"}}
-	result, ok := UserInfo[name]
+	userInfo := map[string]map[string]string{"liangping": {"birthday": "199607021", "sex": "man", "job": "programmer"}, "lianglele": {"birthdat": "19950203", "sex": "man", "job": "civil servant"}}
+	result, ok := userInfo[name]
 	if ok {
 		c.JSON(http.StatusOK, result)
 		return

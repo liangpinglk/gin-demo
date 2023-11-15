@@ -8,6 +8,9 @@ swag init
 - [x] live reload 
 - [x] Using middleware to handle all unexpect errors
 - [x] login check
+- [ ] use mysql
+  - [x] insert
+
 - [ ] golang orm 
 - [ ] log zap
   - [x] [官方doc](https://github.com/uber-go/zap)
@@ -25,3 +28,5 @@ swag init
 > 支持使用goland进行调试。先启动golang服务，然后再在goland中启动debug。
 ### golang orm
 - [gorm](https://gorm.io/docs/)
+### go sql driver
+- [golang-mysql-tutorial](https://tutorialedge.net/golang/golang-mysql-tutorial/)
