@@ -94,3 +94,32 @@ func GetUserInfo(c *gin.Context) {
 	result["count"] = count
 	tools.HttpJson(c, result, "get user info successfully", 200)
 }
+
+// @Summary update user
+// @tag user
+// @Produce json
+// @Accept json
+// @Param request body openapi.UpdateInfo true "更新用户请求体"
+// @Success 200 {object} openapi.UpdateUserRes
+// @Router /user [put]
+func UpdateUserInfo(c *gin.Context) {
+	var updateArg openapi.UpdateInfo
+	if err := c.ShouldBindJSON(&updateArg); err != nil {
+		tools.HttpJson(c, updateArg, fmt.Sprintf("error arg: %s", err), 400)
+		return
+	}
+	updateSQL := "update user set id=id "
+	var update string
+	if updateArg.Name != "" {
+		update += fmt.Sprintf(" , name='%s'", updateArg.Name)
+	}
+	if updateArg.Password != "" {
+		update += fmt.Sprintf(" , password=%s ", updateArg.Password)
+	}
+	_, err := tools.MYSQLDB.Query(updateSQL+update+"where id=?", updateArg.ID)
+	if err != nil {
+		tools.HttpJson(c, updateArg, fmt.Sprintf("error arg: %s", err), 400)
+		return
+	}
+	tools.HttpJson(c, updateArg, fmt.Sprintf("update successfully"), 200)
+}

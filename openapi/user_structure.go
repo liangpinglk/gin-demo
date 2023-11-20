@@ -21,3 +21,14 @@ type ListUserRes struct {
 	CommonInfoRes
 	data []ListUserInfo
 }
+
+type UpdateInfo struct {
+	ID       int    `json:"id" binding:"required"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type UpdateUserRes struct {
+	CommonInfoRes
+	data UpdateInfo
+}
