@@ -1,4 +1,5 @@
-
+## doc
+再项目目录下执行 swag init 命令，会生成一个docs目录，然后访问[swagger index](http://localhost:8080/swagger/index.html)
 ## feature
 - [x] auto generate openapi
 > [swagger index](http://localhost:8080/swagger/index.html)
