@@ -52,11 +52,13 @@ const docTemplate = `{
                 "summary": "create user",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "用户名",
-                        "name": "name",
-                        "in": "path",
-                        "required": true
+                        "description": "创建用户请求体",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.User"
+                        }
                     }
                 ],
                 "responses": {
@@ -71,6 +73,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.User": {
+            "type": "object",
+            "required": [
+                "name",
+                "password"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "models.UserInfo": {
             "type": "object",
             "properties": {

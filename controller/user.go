@@ -15,6 +15,7 @@ type User struct {
 // @tag user
 // @Produce json
 // @Accept json
+// @Param request body User true "创建用户请求体"
 // @Success 200 {object} openapi.CreateUserRes
 // @Router /user [post]
 func CreateUser(c *gin.Context) {

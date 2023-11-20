@@ -8,7 +8,8 @@
 ```shell
 swag init
 ```
-- [ ] swag post 参数
+- [x] swag post 参数
+>  详情查看创建用户接口
 - [x] live reload
 - [x] Using middleware to handle all unexpect errors
 - [x] login check

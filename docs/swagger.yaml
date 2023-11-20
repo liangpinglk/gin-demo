@@ -1,4 +1,14 @@
 definitions:
+  controller.User:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - name
+    - password
+    type: object
   models.UserInfo:
     properties:
       birthday:
@@ -38,11 +48,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 用户名
-        in: path
-        name: name
+      - description: 创建用户请求体
+        in: body
+        name: request
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/controller.User'
       produces:
       - application/json
       responses:
