@@ -13,7 +13,7 @@ import (
 
 // @title swageer demo
 // @version 3.0
-// @description go lang gin web swager demo
+// @description golang gin web swager demo
 // @termsOfService http://127.0.0.1:8080
 func main() {
 	// init
@@ -25,6 +25,7 @@ func main() {
 	//r.GET("/get_user_info", controller.GetUserInfo)
 	r.POST("/user", controller.CreateUser)
 	r.GET("/user", controller.GetUserInfo)
-	r.PUT("user", controller.UpdateUserInfo)
+	r.PUT("/user", controller.UpdateUserInfo)
+	r.POST("/login", controller.Login)
 	r.Run()
 }

@@ -14,7 +14,7 @@ type User struct {
 }
 
 // @Summary create user
-// @tag user
+// @Tags User
 // @Produce json
 // @Accept json
 // @Param request body User true "创建用户请求体"
@@ -54,6 +54,7 @@ func CreateUser(c *gin.Context) {
 
 // @Summary get user info
 // @Produce json
+// @Tags User
 // @Param name query string false "用户名"
 // @Param page query int false "page"
 // @Param page_size query int false "page size"
@@ -96,7 +97,7 @@ func GetUserInfo(c *gin.Context) {
 }
 
 // @Summary update user
-// @tag user
+// @Tags User
 // @Produce json
 // @Accept json
 // @Param request body openapi.UpdateInfo true "更新用户请求体"
@@ -122,4 +123,27 @@ func UpdateUserInfo(c *gin.Context) {
 		return
 	}
 	tools.HttpJson(c, updateArg, fmt.Sprintf("update successfully"), 200)
+}
+
+// @Summary login
+// @Tags User
+// @Produce json
+// @Accept json
+// @Param request body User true "登陆信息"
+// @Success 200 {object} openapi.LoginRes
+// @Router /login [post]
+func Login(c *gin.Context) {
+	var loginInfo User
+	if err := c.ShouldBindJSON(&loginInfo); err != nil {
+		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error: %s", err), 400)
+		return
+	}
+	querySQL := "select id from user where name=? and password=?"
+	var id int
+	err := tools.MYSQLDB.QueryRow(querySQL, loginInfo.Name, loginInfo.Password).Scan(&id)
+	if err != nil {
+		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error"), 400)
+		return
+	}
+	tools.HttpJson(c, loginInfo, fmt.Sprintf("login successfully"), 200)
 }

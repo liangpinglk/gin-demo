@@ -32,3 +32,8 @@ type UpdateUserRes struct {
 	CommonInfoRes
 	data UpdateInfo
 }
+
+type LoginRes struct {
+	CommonInfoRes
+	data any
+}
