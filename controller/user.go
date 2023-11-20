@@ -2,8 +2,10 @@ package controller
 
 import (
 	"fmt"
+	"gin-demo/openapi"
 	"gin-demo/tools"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 type User struct {
@@ -48,4 +50,47 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 	tools.HttpJson(c, userInfo, "create ok", 200)
+}
+
+// @Summary get user info
+// @Produce json
+// @Param name query string false "用户名"
+// @Param page query int false "page"
+// @Param page_size query int false "page size"
+// @Success 200 {object} openapi.ListUserRes
+// @Router /user [get]
+func GetUserInfo(c *gin.Context) {
+	name := c.DefaultQuery("name", "")
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+	querySQL := "select id, name from user where 1=1 "
+	if name != "" {
+		querySQL += fmt.Sprintf(" and name like \"%%s%\"", name)
+	}
+	querySQL += fmt.Sprintf("limit %d offset %d ", pageSize, pageSize*(page-1))
+	var UserInfoList []any
+	results, err := tools.MYSQLDB.Query(querySQL)
+	if err != nil {
+		tools.HttpJson(c, querySQL, fmt.Sprintf("get user info %s failed", err), 400)
+		return
+	}
+
+	for results.Next() {
+		var user openapi.ListUserInfo
+		// for each row, scan the result into our tag composite object
+		err = results.Scan(&user.ID, &user.Name)
+		if err != nil {
+			panic(err.Error()) // proper error handling instead of panic in your app
+		}
+		// and then print out the tag's Name attribute
+		UserInfoList = append(UserInfoList, user)
+	}
+
+	totalCountSQL := "select count(id) as count from user"
+	var count int
+	tools.MYSQLDB.QueryRow(totalCountSQL).Scan(&count)
+	result := make(map[string]any)
+	result["user_info"] = UserInfoList
+	result["count"] = count
+	tools.HttpJson(c, result, "get user info successfully", 200)
 }

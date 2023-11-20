@@ -24,5 +24,6 @@ func main() {
 	r.Use(middleware.CatchError(http.StatusInternalServerError))
 	//r.GET("/get_user_info", controller.GetUserInfo)
 	r.POST("/user", controller.CreateUser)
+	r.GET("/user", controller.GetUserInfo)
 	r.Run()
 }
