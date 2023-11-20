@@ -3,9 +3,13 @@
 - [x] auto generate openapi
 > [swagger index](http://localhost:8080/swagger/index.html)
 ```shell
+ go install github.com/swaggo/swag/cmd/swag@latest
+```
+```shell
 swag init
 ```
-- [x] live reload 
+- [ ] swag post 参数
+- [x] live reload
 - [x] Using middleware to handle all unexpect errors
 - [x] login check
 - [ ] use mysql

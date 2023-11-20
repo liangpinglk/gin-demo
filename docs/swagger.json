@@ -32,6 +32,34 @@
                     }
                 }
             }
+        },
+        "/user": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/openapi.CreateUserRes"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -48,6 +76,9 @@
                     "type": "string"
                 }
             }
+        },
+        "openapi.CreateUserRes": {
+            "type": "object"
         }
     }
 }

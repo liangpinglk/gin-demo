@@ -8,6 +8,8 @@ definitions:
       sex:
         type: string
     type: object
+  openapi.CreateUserRes:
+    type: object
 info:
   contact: {}
   description: go lang gin web swager demo
@@ -31,4 +33,22 @@ paths:
           schema:
             $ref: '#/definitions/models.UserInfo'
       summary: get user info by name
+  /user:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/openapi.CreateUserRes'
+      summary: create user
 swagger: "2.0"

@@ -22,6 +22,7 @@ func main() {
 	r := gin.Default()
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Use(middleware.CatchError(http.StatusInternalServerError))
-	r.GET("/get_user_info", controller.GetUserInfo)
+	//r.GET("/get_user_info", controller.GetUserInfo)
+	r.POST("/user", controller.CreateUser)
 	r.Run()
 }
