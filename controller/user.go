@@ -15,6 +15,7 @@ type User struct {
 
 // @Summary create user
 // @Tags User
+// @Param Authorization header string true "jwt token"
 // @Produce json
 // @Accept json
 // @Param request body User true "创建用户请求体"
@@ -55,6 +56,7 @@ func CreateUser(c *gin.Context) {
 // @Summary get user info
 // @Produce json
 // @Tags User
+// @Param Authorization header string true "jwt token"
 // @Param name query string false "用户名"
 // @Param page query int false "page"
 // @Param page_size query int false "page size"
@@ -97,6 +99,7 @@ func GetUserInfo(c *gin.Context) {
 }
 
 // @Summary update user
+// @Param Authorization header string true "jwt token"
 // @Tags User
 // @Produce json
 // @Accept json
@@ -126,6 +129,7 @@ func UpdateUserInfo(c *gin.Context) {
 }
 
 // @Summary login
+// @Param Authorization header string true "jwt token"
 // @Tags User
 // @Produce json
 // @Accept json
