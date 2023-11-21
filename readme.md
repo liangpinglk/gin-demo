@@ -9,14 +9,14 @@
 ```shell
 swag init
 ```
+- [x] go test  
+进入对应的目录，执行 ```go test```, [doc](https://learnku.com/docs/build-web-application-with-golang/how-113-go-writes-test-cases/3224)
 - [x] swag post 参数
 >  详情查看创建用户接口
 - [x] live reload
 - [x] Using middleware to handle all unexpect errors
 - [x] login check
-- [ ] use mysql
-  - [x] insert
-
+- [x] use mysql
 - [ ] golang orm 
 - [ ] log zap
   - [x] [官方doc](https://github.com/uber-go/zap)

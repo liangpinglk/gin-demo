@@ -145,5 +145,15 @@ func Login(c *gin.Context) {
 		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error"), 400)
 		return
 	}
-	tools.HttpJson(c, loginInfo, fmt.Sprintf("login successfully"), 200)
+	claims := tools.MyCustomClaims{
+		loginInfo.Name,
+		id,
+		tools.JWTRegisteredClaims(),
+	}
+	ss, jwtErr := tools.GenerateJWT(claims)
+	if jwtErr != nil {
+		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error: %s", jwtErr), 400)
+		return
+	}
+	tools.HttpJson(c, ss, fmt.Sprintf("login successfully"), 200)
 }
