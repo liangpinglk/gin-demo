@@ -17,13 +17,16 @@ swag init
 - [x] Using middleware to handle all unexpect errors
 - [x] login check
 - [x] use mysql
+- [ ] use redis
 - [ ] golang orm 
 - [ ] log zap
   - [x] [官方doc](https://github.com/uber-go/zap)
   - [x] [support log file rotation](https://github.com/uber-go/zap/blob/master/FAQ.md)
   - [x] [Zap logger print both to console and to log file](https://stackoverflow.com/questions/50933936/zap-logger-print-both-to-console-and-to-log-file)
   - [ ] 无法显示打印日志的行了
-- [ ] function cost time (auto get function name)
+- [x] api cost time (auto get function name)
+> gin 有统计
+- [ ] gin 日志写入文件
 ## reference
 ### gin use swagger
 - [生成接口文档](https://golang2.eddycjy.com/posts/ch2/04-api-doc/)
