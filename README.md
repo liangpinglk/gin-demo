@@ -17,7 +17,8 @@ swag init
 - [x] Using middleware to handle all unexpect errors
 - [x] login check
 - [x] use mysql
-- [ ] use redis
+- [x] use redis  
+[doc](https://redis.uptrace.dev/zh/)
 - [ ] golang orm 
 - [ ] log zap
   - [x] [官方doc](https://github.com/uber-go/zap)
@@ -26,7 +27,7 @@ swag init
   - [ ] 无法显示打印日志的行了
 - [x] api cost time (auto get function name)
 > gin 有统计
-- [ ] gin 日志写入文件
+- [ ] 如何方便的获取用户信息
 ## reference
 ### gin use swagger
 - [生成接口文档](https://golang2.eddycjy.com/posts/ch2/04-api-doc/)

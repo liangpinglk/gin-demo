@@ -146,7 +146,7 @@ func Login(c *gin.Context) {
 	var id int
 	err := tools.MYSQLDB.QueryRow(querySQL, loginInfo.Name, loginInfo.Password).Scan(&id)
 	if err != nil {
-		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error"), 400)
+		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error %s", err), 400)
 		return
 	}
 	claims := tools.MyCustomClaims{
