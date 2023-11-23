@@ -44,3 +44,11 @@ swag init
 - [golang-mysql-tutorial](https://tutorialedge.net/golang/golang-mysql-tutorial/)
 ## other
 - [godotenv](https://github.com/joho/godotenv)
+- 显示不用的包
+```shell
+go mod tidy -v
+```
+- add missing and remove unused modules
+```shell
+go mod tidy
+```
