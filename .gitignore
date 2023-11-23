@@ -19,6 +19,6 @@
 .idea/
 tmp/
 docs/
-
+.env
 # Go workspace file
 go.work

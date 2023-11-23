@@ -129,7 +129,6 @@ func UpdateUserInfo(c *gin.Context) {
 }
 
 // @Summary login
-// @Param Authorization header string true "jwt token"
 // @Tags User
 // @Produce json
 // @Accept json

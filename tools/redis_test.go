@@ -6,6 +6,7 @@ import (
 )
 
 func TestInitRedisCli(t *testing.T) {
+	InitConfig()
 	InitRedisCli()
 	testKey := "testgo"
 	err := Rdb.Set(RdbCtx, testKey, "testgov", -1).Err()

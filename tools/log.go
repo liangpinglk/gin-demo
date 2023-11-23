@@ -11,7 +11,7 @@ var Sugar *zap.SugaredLogger
 
 func InitLog() {
 	fileOutputW := zapcore.AddSync(&lumberjack.Logger{
-		Filename:   "data/log/test.log",
+		Filename:   Config["LOG_PATH"],
 		MaxSize:    2, //,egabytes
 		MaxBackups: 3,
 		MaxAge:     28, //days

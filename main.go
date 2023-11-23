@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"gin-demo/controller"
 	_ "gin-demo/docs"
 	"gin-demo/middleware"
 	"gin-demo/tools"
+	_ "gin-demo/tools"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -17,6 +19,8 @@ import (
 // @termsOfService http://127.0.0.1:8080
 func main() {
 	// init
+	fmt.Println("testxxx")
+	tools.InitConfig()
 	tools.InitLog()
 	tools.InitMysql()
 	tools.InitRedisCli()

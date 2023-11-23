@@ -9,6 +9,8 @@
 ```shell
 swag init
 ```
+- [ ] 环境变量设置和读取
+> 使用[godotenv](https://github.com/joho/godotenv)
 - [x] go test  
 进入对应的目录，执行 ```go test```, [doc](https://learnku.com/docs/build-web-application-with-golang/how-113-go-writes-test-cases/3224)
 - [x] swag post 参数
@@ -40,3 +42,5 @@ swag init
 - [gorm](https://gorm.io/docs/)
 ### go sql driver
 - [golang-mysql-tutorial](https://tutorialedge.net/golang/golang-mysql-tutorial/)
+## other
+- [godotenv](https://github.com/joho/godotenv)
