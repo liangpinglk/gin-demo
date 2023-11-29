@@ -21,7 +21,14 @@ swag init
 - [x] use mysql
 - [x] use redis  
 [doc](https://redis.uptrace.dev/zh/)
-- [ ] golang orm 
+- [x] golang orm 
+  - [x] install dependence
+  ```shell
+  go get -u gorm.io/gorm 
+  go get -u gorm.io/driver/mysql
+  ```
+  - [x] 增删查改
+  - [x] migrate
 - [ ] log zap
   - [x] [官方doc](https://github.com/uber-go/zap)
   - [x] [support log file rotation](https://github.com/uber-go/zap/blob/master/FAQ.md)

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gin-demo/controller"
 	_ "gin-demo/docs"
 	"gin-demo/middleware"
@@ -19,9 +18,10 @@ import (
 // @termsOfService http://127.0.0.1:8080
 func main() {
 	// init
-	fmt.Println("testxxx")
 	tools.InitConfig()
 	tools.InitLog()
+	tools.InitOrmDB()
+	tools.Migrate()
 	tools.InitMysql()
 	tools.InitRedisCli()
 	r := gin.Default()

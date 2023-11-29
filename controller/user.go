@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"gin-demo/models"
 	"gin-demo/openapi"
 	"gin-demo/tools"
 	"github.com/gin-gonic/gin"
@@ -30,24 +31,18 @@ func CreateUser(c *gin.Context) {
 		tools.HttpJson(c, userInfo, fmt.Sprintf("error arg: %s", err), 400)
 		return
 	}
-	// insert uer info
 	// user exist
-	querySQL := fmt.Sprintf("select id, name from user where name='%s'", userInfo.Name)
-	var name string
-	var id int
-	err := tools.MYSQLDB.QueryRow(querySQL).Scan(&id, &name)
-	if err == nil {
-		fmt.Println(id, name)
-		tools.HttpJson(c, userInfo, fmt.Sprintf("user %s exist, can't repeat", name), 400)
+	queryResult := tools.OrmDb.Where("name = ?", userInfo.Name).First(&models.UserInfo{})
+	if queryResult.Error == nil {
+		tools.HttpJson(c, userInfo, fmt.Sprintf("user %s exist, can't repeat", userInfo.Name), 400)
 		return
 	}
 
 	// todo: encrypt password
-	insertSql := fmt.Sprintf("INSERT INTO user (name, password) VALUES ( '%s', '%s' )", userInfo.Name, userInfo.Password)
-	fmt.Println(insertSql)
-	_, err = tools.MYSQLDB.Query(insertSql)
-	if err != nil {
-		tools.HttpJson(c, userInfo, fmt.Sprintf("create failed: %s", err), 400)
+	insertResult := tools.OrmDb.Create(&models.UserInfo{Name: userInfo.Name, Password: userInfo.Password})
+
+	if insertResult.Error != nil {
+		tools.HttpJson(c, userInfo, fmt.Sprintf("create failed: %s", insertResult.Error), 400)
 		return
 	}
 	tools.HttpJson(c, userInfo, "create ok", 200)
@@ -66,35 +61,17 @@ func GetUserInfo(c *gin.Context) {
 	name := c.DefaultQuery("name", "")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
-	querySQL := "select id, name from user where 1=1 "
+	var totalCount int64
+	query := tools.OrmDb.Model(&models.UserInfo{})
 	if name != "" {
-		querySQL += fmt.Sprintf(" and name like \"%%s%\"", name)
+		query = query.Where("name like ?", fmt.Sprintf("%%%s%%", name))
 	}
-	querySQL += fmt.Sprintf("limit %d offset %d ", pageSize, pageSize*(page-1))
-	var UserInfoList []any
-	results, err := tools.MYSQLDB.Query(querySQL)
-	if err != nil {
-		tools.HttpJson(c, querySQL, fmt.Sprintf("get user info %s failed", err), 400)
-		return
-	}
-
-	for results.Next() {
-		var user openapi.ListUserInfo
-		// for each row, scan the result into our tag composite object
-		err = results.Scan(&user.ID, &user.Name)
-		if err != nil {
-			panic(err.Error()) // proper error handling instead of panic in your app
-		}
-		// and then print out the tag's Name attribute
-		UserInfoList = append(UserInfoList, user)
-	}
-
-	totalCountSQL := "select count(id) as count from user"
-	var count int
-	tools.MYSQLDB.QueryRow(totalCountSQL).Scan(&count)
+	query.Count(&totalCount)
+	var UserInfoList []models.UserInfo
+	query.Limit(pageSize).Offset((page - 1) * pageSize).Find(&UserInfoList)
 	result := make(map[string]any)
 	result["user_info"] = UserInfoList
-	result["count"] = count
+	result["count"] = totalCount
 	tools.HttpJson(c, result, "get user info successfully", 200)
 }
 
@@ -112,17 +89,19 @@ func UpdateUserInfo(c *gin.Context) {
 		tools.HttpJson(c, updateArg, fmt.Sprintf("error arg: %s", err), 400)
 		return
 	}
-	updateSQL := "update user set id=id "
-	var update string
+	userInfo := models.UserInfo{}
+	tools.OrmDb.First(&userInfo, updateArg.ID)
+
 	if updateArg.Name != "" {
-		update += fmt.Sprintf(" , name='%s'", updateArg.Name)
+		userInfo.Name = updateArg.Name
 	}
 	if updateArg.Password != "" {
-		update += fmt.Sprintf(" , password=%s ", updateArg.Password)
+		userInfo.Password = updateArg.Password
 	}
-	_, err := tools.MYSQLDB.Query(updateSQL+update+"where id=?", updateArg.ID)
-	if err != nil {
-		tools.HttpJson(c, updateArg, fmt.Sprintf("error arg: %s", err), 400)
+	updateResult := tools.OrmDb.Save(&userInfo)
+
+	if updateResult.Error != nil {
+		tools.HttpJson(c, updateArg, fmt.Sprintf("error arg: %s", updateResult.Error), 400)
 		return
 	}
 	tools.HttpJson(c, updateArg, fmt.Sprintf("update successfully"), 200)
@@ -141,16 +120,15 @@ func Login(c *gin.Context) {
 		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error: %s", err), 400)
 		return
 	}
-	querySQL := "select id from user where name=? and password=?"
-	var id int
-	err := tools.MYSQLDB.QueryRow(querySQL, loginInfo.Name, loginInfo.Password).Scan(&id)
-	if err != nil {
-		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error %s", err), 400)
+	userInfo := models.UserInfo{}
+	queryResult := tools.OrmDb.Where("name = ?", loginInfo.Name).Where("password = ?", loginInfo.Password).First(&userInfo)
+
+	if queryResult.Error != nil {
+		tools.HttpJson(c, loginInfo, fmt.Sprintf("login error %s", queryResult.Error), 400)
 		return
 	}
 	claims := tools.MyCustomClaims{
-		loginInfo.Name,
-		id,
+		userInfo.Name, userInfo.ID,
 		tools.JWTRegisteredClaims(),
 	}
 	ss, jwtErr := tools.GenerateJWT(claims)
